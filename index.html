@@ -1,0 +1,65 @@
+<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link rel="icon" href="data:">
+<title>xr-beetle</title></head><body>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://code4fukui.github.io/three.js/build/three.module.js",
+    "three/addons/": "https://code4fukui.github.io/three.js/examples/jsm/",
+    "three/nodes": "https://code4fukui.github.io/three.js/examples/jsm/nodes/Nodes.js"
+  }
+}
+</script>
+<script type="module">
+import { THREE, scene, camera, renderer } from "https://code4fukui.github.io/egxr.js/egxr.js";
+import { loadGLTF } from "https://code4fukui.github.io/vr-beetle/loadGLTF.js";
+import * as SkeletonUtils from "three/addons/utils/SkeletonUtils.js";
+import { PCControl } from "https://code4fukui.github.io/vr-beetle/PCControl.js";
+
+const pcctrl = new PCControl(camera, renderer.domElement);
+
+const fns = [
+  //"cc0____snow_crab_chionoecetes_opilio.glb", // 18M
+  "cc0___alaskan_pink_shrimp_p._eous.glb", // 28M
+  //"cc0___five-ray_yellowtail_s._quinqueradiata.glb", // 49M
+];
+
+const models = [];
+
+const loadAnimatedGLTF = async (fn, x, cnt, scale) => {
+  console.log(fn);
+  const gltf = await loadGLTF(fn);
+  const model = gltf.scene;
+  const z = -.2;
+  const w = .8;
+  for (let i = 0; i < cnt; i++) {
+    const m = SkeletonUtils.clone(model);
+    scene.add(m);
+    //const x = i * i * .08;// - .5;
+    x = i * .2 - .1;
+    const y = 0;
+    //const y = i * .2 - .1;
+    m.position.set(x, y, z);
+    //const scale = 0.1; //  << i;
+    const scale2 = scale * (i * 2 + 1);
+    m.scale.set(scale2, scale2, scale2);
+    m.mixer = new THREE.AnimationMixer(m);
+    gltf.animations.forEach(clip => m.mixer.clipAction(clip).startAt(i * 0.05).play());
+    models.push(m);
+  }
+};
+
+const w = .3;
+for (let i = 0; i < fns.length; i++) {
+  await loadAnimatedGLTF(fns[i], -w + w * i, 1, 1);
+  //await loadAnimatedGLTF(fns[1], w, 2, 1);
+}
+
+const clock = new THREE.Clock();
+renderer.setAnimationLoop(() => {
+  const delta = clock.getDelta();
+  models.forEach((m, idx) => m.mixer?.update(delta));
+  pcctrl.update(delta);
+	renderer.render(scene, camera);
+});
+</script>
+</body></html>
