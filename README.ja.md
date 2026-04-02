@@ -1,39 +1,24 @@
-# Ar Hokuriku Fish
+# ar-hokuriku-fish
 
-> 日本語のREADMEはこちらです: [README.ja.md](README.ja.md)
+`createLabel` を提供する JavaScript/ES モジュールです。Deno およびモダンブラウザで動作します。
 
-A JavaScript/ES module providing `createLabel`. Works with Deno and modern browsers.
-
-## Demo
+## デモ
 
 https://code4fukui.github.io/ar-hokuriku-fish/
 
-## Features
-
-- Exports: `createLabel`
-- ES module compatible with Deno and modern browsers
-
-## Usage
+## 使い方
 
 ```js
 import { createLabel } from "https://code4fukui.github.io/ar-hokuriku-fish/createLabel.js";
 ```
 
-## Test
+## テスト
 
 ```bash
 deno test
 ```
 
-## Installation & Setup
-
-No build step required. Clone and open in a browser or use with Deno:
-
-```bash
-git clone https://github.com/code4fukui/ar-hokuriku-fish.git
-```
-
-## References
+## 参考リンク
 
 - [CC0 ホッコクアカエビ 🦐 Alaskan Pink Shrimp, P. eous - Download Free 3D model by ffish.asia / floraZia.com (@ffishAsia-and-floraZia) [7bf0947]](https://sketchfab.com/3d-models/cc0-alaskan-pink-shrimp-p-eous-7bf09478c7f94b419f1b90261c538e65)
 - [ffish.asia / floraZia.com (@ffishAsia-and-floraZia) - Sketchfab](https://sketchfab.com/3d-models/cc0-five-ray-yellowtail-s-quinqueradiata-e27d30bd4d7347238e428a8e36d9fde4)
